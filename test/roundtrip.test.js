@@ -1,5 +1,7 @@
 import test from 'node:test'
 import assert from 'node:assert/strict'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { roundtrip, mangled } from '../lib/roundtrip.js'
 
 test('a no-op command survives cleanly', async () => {
@@ -44,7 +46,10 @@ test('tar preserves fixture names (byte-exact on Linux; NFC-tolerant on macOS bs
     (await readdir(dir)).filter(n => n !== 'out.tar' && n !== 'restored')
 
   const before = await topNames()
-  const proc = spawnSync('bash', ['-c', 'tar cf out.tar . && mkdir restored && tar xf out.tar -C restored'], { cwd: dir, encoding: 'utf8' })
+  // COPYFILE_DISABLE=1 stops macOS bsdtar from AppleDouble metadata handling:
+  // it both tries to add out.tar to itself and restores '._name' sidecars,
+  // which overflows NAME_MAX for 255-char fixtures. It is ignored by GNU tar.
+  const proc = spawnSync('bash', ['-c', 'COPYFILE_DISABLE=1 tar cf out.tar --exclude out.tar . && mkdir restored && COPYFILE_DISABLE=1 tar xf out.tar -C restored'], { cwd: dir, encoding: 'utf8' })
   assert.equal(proc.status, 0, `tar failed: ${proc.stderr}`)
 
   const after = (await readdir(join(dir, 'restored'))).filter(n => n !== 'out.tar' && n !== 'restored')

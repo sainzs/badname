@@ -984,7 +984,7 @@
         "linux",
         "win32"
       ],
-      "why": "Exactly 255 bytes: the classic ext4 boundary — succeeds, but one more byte fails."
+      "why": "Exactly 255 bytes: the classic ext4 boundary — succeeds, but one more byte fails. Verified in CI: macOS bsdtar fails to restore AppleDouble metadata at this boundary because the \"._\" sidecar prefix overflows NAME_MAX (workaround: COPYFILE_DISABLE=1)."
     },
     {
       "id": "length-limits-03",

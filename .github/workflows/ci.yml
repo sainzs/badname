@@ -51,9 +51,9 @@ jobs:
           SANDBOX=$(mktemp -d)
           node bin/pathological.js seed "$SANDBOX"
           cd "$SANDBOX"
-          tar cf out.tar .
+          COPYFILE_DISABLE=1 tar cf out.tar --exclude out.tar .
           mkdir restored
-          tar xf out.tar -C restored
+          COPYFILE_DISABLE=1 tar xf out.tar -C restored
           node -e "
             const fs = require('fs');
             const before = fs.readdirSync('.').filter(n => n !== 'out.tar' && n !== 'restored');

@@ -177,7 +177,7 @@ add('\uFE68small-backslash.txt', 'separator-lookalikes', 'Small reverse solidus 
 
 // --- length-limits ----------------------------------------------------------
 add('a'.repeat(255) + '.txt', 'length-limits', '255 ASCII chars + ".txt" = 259 units: over the ext4 255-byte limit, over APFS 255-UTF-16-char limit, over classic Win32 MAX_PATH budget. Exists to test tool error handling.', { platforms: [] })
-add('a'.repeat(255), 'length-limits', 'Exactly 255 bytes: the classic ext4 boundary — succeeds, but one more byte fails.', { platforms: ['darwin', 'linux', 'win32'] })
+add('a'.repeat(255), 'length-limits', 'Exactly 255 bytes: the classic ext4 boundary — succeeds, but one more byte fails. Verified in CI: macOS bsdtar fails to restore AppleDouble metadata at this boundary because the "._" sidecar prefix overflows NAME_MAX (workaround: COPYFILE_DISABLE=1).', { platforms: ['darwin', 'linux', 'win32'] })
 add('a'.repeat(256), 'length-limits', '256 bytes: fails on ext4 and (as 256 UTF-16 chars) on APFS; exists to test error handling.', { platforms: [] })
 add('é'.repeat(100) + '.txt', 'length-limits', '100 é (200 UTF-8 bytes, 100 UTF-16 units): passes APFS, passes ext4, demonstrates units confusion.', { platforms: ['darwin', 'linux', 'win32'] })
 add('\u{1F600}'.repeat(128) + '.txt', 'length-limits', '128 emoji (512 UTF-8 bytes, 256 UTF-16 units): over ext4 bytes AND APFS units; a 4-byte/2-unit divergence demo.', { platforms: [] })
