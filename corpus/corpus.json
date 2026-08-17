@@ -103,7 +103,7 @@
         "win32"
       ],
       "group": "cafe",
-      "why": "NFD (decomposed) twin of group \"cafe\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"cafe\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-03",
@@ -127,7 +127,7 @@
         "win32"
       ],
       "group": "naive",
-      "why": "NFD (decomposed) twin of group \"naive\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"naive\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-05",
@@ -151,7 +151,7 @@
         "win32"
       ],
       "group": "resume",
-      "why": "NFD (decomposed) twin of group \"resume\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"resume\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-07",
@@ -175,7 +175,7 @@
         "win32"
       ],
       "group": "jalapeno",
-      "why": "NFD (decomposed) twin of group \"jalapeno\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"jalapeno\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-09",
@@ -199,7 +199,7 @@
         "win32"
       ],
       "group": "grusse",
-      "why": "NFD (decomposed) twin of group \"grusse\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"grusse\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-11",
@@ -223,7 +223,7 @@
         "win32"
       ],
       "group": "angstrom",
-      "why": "NFD (decomposed) twin of group \"angstrom\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+      "why": "NFD (decomposed) twin of group \"angstrom\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers)."
     },
     {
       "id": "unicode-normalization-13",

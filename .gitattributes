@@ -1,0 +1,4 @@
+# Deterministic checkouts everywhere: the corpus drift check compares
+# generated artifacts byte-for-byte, so Windows autocrlf must not rewrite
+# them (or any source) on checkout.
+* text=auto eol=lf

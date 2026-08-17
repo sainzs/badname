@@ -85,7 +85,7 @@ const NORM_PAIRS = [
 ]
 for (const [nfc, nfd, group] of NORM_PAIRS) {
   add(nfc, 'unicode-normalization', `NFC (precomposed) twin of group "${group}"; visually identical to its NFD sibling.`, { group })
-  add(nfd, 'unicode-normalization', `NFD (decomposed) twin of group "${group}"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216).`, { group })
+  add(nfd, 'unicode-normalization', `NFD (decomposed) twin of group "${group}"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers).`, { group })
 }
 // NFKC compatibility twins
 add('\uFB01le.txt', 'unicode-normalization', 'fi ligature U+FB01; NFKC-folds to "file.txt" but differs in bytes. Verified: APFS treats it as equal to the ASCII name — creating both fails with EEXIST.', { group: 'ligature-fi' })
@@ -368,8 +368,13 @@ const json = buildJson()
 const plain = buildPlain()
 
 if (checkOnly) {
-  const onDiskJson = readFileSync(join(CORPUS_DIR, 'corpus.json'), 'utf8')
-  const onDiskPlain = readFileSync(join(CORPUS_DIR, 'PLAIN.txt'), 'utf8')
+  // Tolerate CRLF introduced by git autocrlf on Windows checkouts: the
+  // builder always emits LF and .gitattributes pins eol=lf, but a
+  // contributor with local overrides should get drift only from real
+  // content changes, not line endings.
+  const strip = (s) => s.replace(/\r\n/g, '\n')
+  const onDiskJson = strip(readFileSync(join(CORPUS_DIR, 'corpus.json'), 'utf8'))
+  const onDiskPlain = strip(readFileSync(join(CORPUS_DIR, 'PLAIN.txt'), 'utf8'))
   let ok = true
   if (onDiskJson !== json) {
     console.error('corpus/corpus.json is out of date. Run: npm run corpus:build')

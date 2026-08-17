@@ -31,11 +31,50 @@ test('a deleting mangler is detected as missing', async () => {
   assert.ok(report.results.some(r => r.kind === 'missing'))
 })
 
-test('tar roundtrip on POSIX keeps names intact (the reference tool)', async () => {
+test('tar preserves fixture names (byte-exact on Linux; NFC-tolerant on macOS bsdtar)', async () => {
   if (process.platform === 'win32') return
-  const cmd = 'bash -c \'tar cf out.tar . 2>/dev/null && mkdir restored && tar xf out.tar -C restored 2>/dev/null && rm -f out.tar && rm -rf $(ls -A | grep -v restored) && mv restored/* . 2>/dev/null; rmdir restored\''
-  const report = await roundtrip(cmd)
-  // bsdtar/GNU tar on macOS/Linux handle Unicode names correctly; allow a
-  // small number of platform quirks but the vast majority must survive.
-  assert.ok(report.survived.length > 100, `only ${report.survived.length} survived tar roundtrip`)
+  const { mkdtemp, readdir } = await import('node:fs/promises')
+  const { spawnSync } = await import('node:child_process')
+  const { seed } = await import('../lib/seed.js')
+
+  const dir = await mkdtemp(join(tmpdir(), 'pathological-tar-'))
+  await seed(dir)
+
+  const topNames = async () =>
+    (await readdir(dir)).filter(n => n !== 'out.tar' && n !== 'restored')
+
+  const before = await topNames()
+  const proc = spawnSync('bash', ['-c', 'tar cf out.tar . && mkdir restored && tar xf out.tar -C restored'], { cwd: dir, encoding: 'utf8' })
+  assert.equal(proc.status, 0, `tar failed: ${proc.stderr}`)
+
+  const after = (await readdir(join(dir, 'restored'))).filter(n => n !== 'out.tar' && n !== 'restored')
+  const afterSet = new Set(after)
+
+  const missing = []
+  const normalized = []
+  for (const name of before) {
+    if (afterSet.has(name)) continue
+    if (after.some(n => n.normalize('NFC') === name.normalize('NFC'))) {
+      normalized.push(name)
+      continue
+    }
+    missing.push(name)
+  }
+
+  // Names must never be LOST on any platform.
+  assert.deepEqual(missing, [], `tar lost names: ${JSON.stringify(missing)}`)
+
+  // On Linux, tar must also preserve bytes exactly.
+  // On macOS, bsdtar (libarchive) writes pax headers in NFC, so NFD names
+  // legitimately come back normalized — a real finding this corpus exists
+  // to document, tolerated and surfaced here.
+  if (process.platform === 'darwin') {
+    if (normalized.length > 0) {
+      console.log(`note: macOS bsdtar normalized ${normalized.length} name(s) through the tar roundtrip (expected finding)`)
+    }
+  } else {
+    assert.deepEqual(normalized, [], `tar normalized names on ${process.platform}: ${JSON.stringify(normalized)}`)
+  }
+
+  assert.ok(before.length > 100, `only ${before.length} fixtures at top level`)
 })

@@ -51,18 +51,30 @@ jobs:
           SANDBOX=$(mktemp -d)
           node bin/pathological.js seed "$SANDBOX"
           cd "$SANDBOX"
-          tar cf out.tar . 2>/dev/null
+          tar cf out.tar .
           mkdir restored
-          tar xf out.tar -C restored 2>/dev/null
+          tar xf out.tar -C restored
           node -e "
             const fs = require('fs');
             const before = fs.readdirSync('.').filter(n => n !== 'out.tar' && n !== 'restored');
-            const after = fs.readdirSync('restored');
-            const missing = before.filter(n => !after.includes(n));
-            const extra = after.filter(n => !before.includes(n));
-            if (missing.length || extra.length) {
-              console.error('tar roundtrip FAILED', { missing, extra });
+            const after = fs.readdirSync('restored').filter(n => n !== 'out.tar');
+            const afterSet = new Set(after);
+            const missing = [];
+            const normalized = [];
+            for (const name of before) {
+              if (afterSet.has(name)) continue;
+              if (after.some(n => n.normalize('NFC') === name.normalize('NFC'))) { normalized.push(name); continue; }
+              missing.push(name);
+            }
+            if (missing.length) { console.error('tar roundtrip FAILED — lost names:', missing); process.exit(1); }
+            if (process.platform === 'darwin') {
+              // macOS bsdtar (libarchive) writes pax headers in NFC: NFD
+              // fixtures legitimately come back normalized. That is a
+              // finding this corpus documents, not a failure.
+              if (normalized.length) console.log('note: macOS bsdtar normalized ' + normalized.length + ' name(s) (expected finding)');
+            } else if (normalized.length) {
+              console.error('tar roundtrip FAILED — normalized names on ' + process.platform + ':', normalized);
               process.exit(1);
             }
-            console.log('tar roundtrip clean: ' + before.length + ' names');
+            console.log('tar roundtrip clean: ' + (before.length - normalized.length) + ' byte-exact, ' + normalized.length + ' normalized');
           "
