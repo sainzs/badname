@@ -124,14 +124,14 @@ add('tail\u200F.txt', 'bidi-rtl', 'Trailing RLM: two names byte-different, visua
 add('\u0663\u0665\u0669.txt', 'bidi-rtl', 'Arabic-Indic digits ٣٥٩: not ASCII 359; numeric parsers and humans both misread it.')
 
 // --- control-chars ----------------------------------------------------------
-add('li\nne.txt', 'control-chars', 'Embedded newline: corrupts line-oriented logs, shell scripts, and CSV exports of file lists.')
-add('ta\tb.txt', 'control-chars', 'Embedded tab: breaks column-aligned listings and tab-completion.')
-add('es\x1Bc.txt', 'control-chars', 'Embedded ESC: terminal escape-injection vehicle when a tool prints filenames.')
-add('de\x7Fl.txt', 'control-chars', 'Embedded DEL (U+007F).')
-add('c1\x9B.txt', 'control-chars', 'C1 CSI (U+009B) — equivalent of ESC [ in a single byte of latin-1; escapes terminals that decode it.')
-add('cr\rname.txt', 'control-chars', 'Embedded carriage return: overwrites the line in most terminals when printed.')
-add('vt\x0Bname.txt', 'control-chars', 'Vertical tab in a name.')
-add('ff\x0Cname.txt', 'control-chars', 'Form feed in a name; some terminals clear the screen.')
+add('li\nne.txt', 'control-chars', 'Embedded newline (illegal in Windows filenames): corrupts line-oriented logs, shell scripts, and CSV exports of file lists.', { platforms: ['darwin', 'linux'] })
+add('ta\tb.txt', 'control-chars', 'Embedded tab: breaks column-aligned listings and tab-completion.', { platforms: ['darwin', 'linux'] })
+add('es\x1Bc.txt', 'control-chars', 'Embedded ESC: terminal escape-injection vehicle when a tool prints filenames.', { platforms: ['darwin', 'linux'] })
+add('de\x7Fl.txt', 'control-chars', 'Embedded DEL (U+007F).', { platforms: ['darwin', 'linux'] })
+add('c1\x9B.txt', 'control-chars', 'C1 CSI (U+009B) — equivalent of ESC [ in a single byte of latin-1; escapes terminals that decode it.', { platforms: ['darwin', 'linux'] })
+add('cr\rname.txt', 'control-chars', 'Embedded carriage return: overwrites the line in most terminals when printed.', { platforms: ['darwin', 'linux'] })
+add('vt\x0Bname.txt', 'control-chars', 'Vertical tab in a name.', { platforms: ['darwin', 'linux'] })
+add('ff\x0Cname.txt', 'control-chars', 'Form feed in a name; some terminals clear the screen.', { platforms: ['darwin', 'linux'] })
 
 // --- bom-invisibles ---------------------------------------------------------
 add('\uFEFFbom.txt', 'bom-invisibles', 'Leading BOM U+FEFF: invisible in editors, first byte differs.')
@@ -212,17 +212,17 @@ add('\uFF1D\uFF1D.txt', 'width-twins', 'Fullwidth ＝＝ pair: looks like a comp
 // --- cli-glob-hazards -------------------------------------------------------
 add('--flag.txt', 'cli-glob-hazards', 'Leading dashes: naive shell-outs treat it as an option; needs ./ or -- separation.')
 add('-rf', 'cli-glob-hazards', 'Exactly -rf: catastrophic as a bare argument to rm.')
-add('*', 'cli-glob-hazards', 'Literal asterisk name: globs to every sibling if unquoted.')
-add('?', 'cli-glob-hazards', 'Literal question mark: single-char glob.')
+add('*', 'cli-glob-hazards', 'Literal asterisk name: globs to every sibling if unquoted.', { platforms: ['darwin', 'linux'] })
+add('?', 'cli-glob-hazards', 'Literal question mark: single-char glob.', { platforms: ['darwin', 'linux'] })
 add('[a-z]', 'cli-glob-hazards', 'Literal bracket expression as a name.')
 add('{a,b}', 'cli-glob-hazards', 'Brace expansion pattern as a name.')
 add('$HOME.txt', 'cli-glob-hazards', 'Dollar-name: expands in unquoted shells.')
 add('`tick`.txt', 'cli-glob-hazards', 'Backticks: command substitution in unquoted contexts.')
 add('a;b.txt', 'cli-glob-hazards', 'Semicolon: statement separator injection.')
-add('a|b.txt', 'cli-glob-hazards', 'Pipe: pipeline injection.')
-add('a>b.txt', 'cli-glob-hazards', 'Angle bracket: redirect injection.')
+add('a|b.txt', 'cli-glob-hazards', 'Pipe: pipeline injection; also an illegal filename character on Windows.', { platforms: ['darwin', 'linux'] })
+add('a>b.txt', 'cli-glob-hazards', 'Angle bracket: redirect injection; also an illegal filename character on Windows.', { platforms: ['darwin', 'linux'] })
 add("a'quote.txt", 'cli-glob-hazards', 'Unbalanced single quote: breaks quoted shell composition.')
-add('a"dquote.txt', 'cli-glob-hazards', 'Unbalanced double quote.')
+add('a"dquote.txt', 'cli-glob-hazards', 'Unbalanced double quote; the embedded quote is illegal in Windows filenames.', { platforms: ['darwin', 'linux'] })
 add('..dotdot.txt', 'cli-glob-hazards', 'Leading .. — not a traversal, but rejected by paranoid validators; the false-positive twin of "../".')
 
 // --- whitespace-lookalikes --------------------------------------------------
@@ -232,8 +232,8 @@ add('en\u2002sp.txt', 'whitespace-lookalikes', 'En space U+2002: the width of a 
 add('em\u2003sp.txt', 'whitespace-lookalikes', 'Em space U+2003: the widest common space; still equal to nothing under NFC.')
 add('hair\u200Asp.txt', 'whitespace-lookalikes', 'Hair space U+200A: invisible at normal font sizes.')
 add('  leading.txt', 'whitespace-lookalikes', 'Two leading ASCII spaces: legal, invisible in listings, trimmed by over-eager tools.')
-add('trailing.txt  ', 'whitespace-lookalikes', 'Two trailing ASCII spaces; also Windows-stripped.')
-add('   ', 'whitespace-lookalikes', 'Spaces-only name: whitespace, empty, and visible all at once.')
+add('trailing.txt  ', 'whitespace-lookalikes', 'Two trailing ASCII spaces; also Windows-stripped.', { platforms: ['darwin', 'linux'] })
+add('   ', 'whitespace-lookalikes', 'Spaces-only name: whitespace, empty, and visible all at once; Win32 strips it to an empty name, so it is POSIX-only.', { platforms: ['darwin', 'linux'] })
 
 // --- deep-nesting -----------------------------------------------------------
 add('a/'.repeat(10) + 'leaf.txt', 'deep-nesting', '10-level tree; total path still short.')

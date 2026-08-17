@@ -76,7 +76,7 @@ test('check walks a real tree and reports relative paths', async () => {
   await writeFile(join(dir, 'normal.txt'), 'hi')
   const { hits, scanned } = await check(dir)
   assert.equal(hits.length, 1)
-  assert.equal(hits[0].relPath, join('docs', 'CON'))
+  assert.equal(hits[0].relPath, 'docs/CON')
   assert.equal(scanned, 3)
 })
 

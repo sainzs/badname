@@ -543,10 +543,9 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
-      "why": "Embedded newline: corrupts line-oriented logs, shell scripts, and CSV exports of file lists."
+      "why": "Embedded newline (illegal in Windows filenames): corrupts line-oriented logs, shell scripts, and CSV exports of file lists."
     },
     {
       "id": "control-chars-02",
@@ -554,8 +553,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Embedded tab: breaks column-aligned listings and tab-completion."
     },
@@ -565,8 +563,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Embedded ESC: terminal escape-injection vehicle when a tool prints filenames."
     },
@@ -576,8 +573,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Embedded DEL (U+007F)."
     },
@@ -587,8 +583,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "C1 CSI (U+009B) — equivalent of ESC [ in a single byte of latin-1; escapes terminals that decode it."
     },
@@ -598,8 +593,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Embedded carriage return: overwrites the line in most terminals when printed."
     },
@@ -609,8 +603,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Vertical tab in a name."
     },
@@ -620,8 +613,7 @@
       "category": "control-chars",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Form feed in a name; some terminals clear the screen."
     },
@@ -1285,8 +1277,7 @@
       "category": "cli-glob-hazards",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Literal asterisk name: globs to every sibling if unquoted."
     },
@@ -1296,8 +1287,7 @@
       "category": "cli-glob-hazards",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Literal question mark: single-char glob."
     },
@@ -1362,10 +1352,9 @@
       "category": "cli-glob-hazards",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
-      "why": "Pipe: pipeline injection."
+      "why": "Pipe: pipeline injection; also an illegal filename character on Windows."
     },
     {
       "id": "cli-glob-hazards-11",
@@ -1373,10 +1362,9 @@
       "category": "cli-glob-hazards",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
-      "why": "Angle bracket: redirect injection."
+      "why": "Angle bracket: redirect injection; also an illegal filename character on Windows."
     },
     {
       "id": "cli-glob-hazards-12",
@@ -1395,10 +1383,9 @@
       "category": "cli-glob-hazards",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
-      "why": "Unbalanced double quote."
+      "why": "Unbalanced double quote; the embedded quote is illegal in Windows filenames."
     },
     {
       "id": "cli-glob-hazards-14",
@@ -1483,8 +1470,7 @@
       "category": "whitespace-lookalikes",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
       "why": "Two trailing ASCII spaces; also Windows-stripped."
     },
@@ -1494,10 +1480,9 @@
       "category": "whitespace-lookalikes",
       "platforms": [
         "darwin",
-        "linux",
-        "win32"
+        "linux"
       ],
-      "why": "Spaces-only name: whitespace, empty, and visible all at once."
+      "why": "Spaces-only name: whitespace, empty, and visible all at once; Win32 strips it to an empty name, so it is POSIX-only."
     },
     {
       "id": "deep-nesting-01",

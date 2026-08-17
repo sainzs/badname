@@ -3,7 +3,7 @@ import assert from 'node:assert/strict'
 import { roundtrip, mangled } from '../lib/roundtrip.js'
 
 test('a no-op command survives cleanly', async () => {
-  const report = await roundtrip('true')
+  const report = await roundtrip('node -e "0"')
   assert.equal(report.results.length, 0)
   assert.ok(report.survived.length > 100, `only ${report.survived.length} survived`)
   assert.equal(mangled(report), false)
