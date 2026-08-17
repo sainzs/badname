@@ -1,6 +1,6 @@
 {
   "name": "@sainzs/pathological",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A maintained corpus of pathological file paths — Unicode normalization, reserved names, bidi, control chars — plus a harness to test any tool against them.",
   "license": "MIT",
   "author": "Santiago Sainz <214846064+sainzs@users.noreply.github.com> (https://github.com/sainzs)",

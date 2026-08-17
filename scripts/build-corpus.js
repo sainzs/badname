@@ -16,7 +16,7 @@ import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const CORPUS_DIR = join(ROOT, 'corpus')
-const VERSION = '0.1.0'
+const VERSION = '0.1.1'
 
 // ---------------------------------------------------------------------------
 // Categories
