@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [20, 24]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Corpus in sync + tests + self-scan
+        run: npm run check
+
+  # Dogfood: the corpus scans its own repository tree on every PR.
+  pathological-self-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node bin/pathological.js check .
+
+  # Reference roundtrip: the system tar must survive the corpus.
+  # If this fails on a runner image, that is a finding — investigate before
+  # merging; it has caught runner toolchain changes before.
+  tar-roundtrip:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: tar must roundtrip every fixture name
+        run: |
+          set -e
+          SANDBOX=$(mktemp -d)
+          node bin/pathological.js seed "$SANDBOX"
+          cd "$SANDBOX"
+          tar cf out.tar . 2>/dev/null
+          mkdir restored
+          tar xf out.tar -C restored 2>/dev/null
+          node -e "
+            const fs = require('fs');
+            const before = fs.readdirSync('.').filter(n => n !== 'out.tar' && n !== 'restored');
+            const after = fs.readdirSync('restored');
+            const missing = before.filter(n => !after.includes(n));
+            const extra = after.filter(n => !before.includes(n));
+            if (missing.length || extra.length) {
+              console.error('tar roundtrip FAILED', { missing, extra });
+              process.exit(1);
+            }
+            console.log('tar roundtrip clean: ' + before.length + ' names');
+          "

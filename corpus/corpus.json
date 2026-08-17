@@ -1,0 +1,1722 @@
+{
+  "name": "pathological",
+  "version": "0.1.0",
+  "license": "MIT",
+  "categories": [
+    {
+      "id": "unicode-normalization",
+      "description": "NFC/NFD/NFKC twins of the same visible name. Break diff, patch, and sync tools that compare names byte-wise."
+    },
+    {
+      "id": "combining-marks",
+      "description": "Base characters followed by combining marks. Invisible to reviewers, fatal to exact-match logic."
+    },
+    {
+      "id": "emoji-zwj",
+      "description": "Emoji joined by zero-width joiners, modifiers, and regional-indicator pairs. Multi-codepoint graphemes that truncate badly."
+    },
+    {
+      "id": "bidi-rtl",
+      "description": "Right-to-left text and bidi control characters. Renders one way, sorts and compares another."
+    },
+    {
+      "id": "control-chars",
+      "description": "Control characters embedded in names. Corrupt terminals, logs, and anything that renders paths."
+    },
+    {
+      "id": "bom-invisibles",
+      "description": "Byte-order marks and invisible formatting characters. Two names look identical, differ in bytes."
+    },
+    {
+      "id": "windows-reserved",
+      "description": "DOS device names (CON, NUL, COM1…). Uncreatable or bizarre on Windows; fine on POSIX. Class of Kilo Code PR #7834."
+    },
+    {
+      "id": "trailing-separators",
+      "description": "Trailing dots and spaces. Windows strips them silently, so copy operations lose the roundtrip."
+    },
+    {
+      "id": "separator-lookalikes",
+      "description": "Colons, backslashes, and Unicode solidus lookalikes. Separator characters that are legal name bytes on one OS and structure on another."
+    },
+    {
+      "id": "length-limits",
+      "description": "Names at and over byte/UTF-16 limits. 255 bytes (ext4) vs 255 UTF-16 chars (APFS/NTFS) diverge on multibyte names."
+    },
+    {
+      "id": "case-collisions",
+      "description": "Names that collide under case-insensitive or case-folding comparison but differ in bytes."
+    },
+    {
+      "id": "locale-casing",
+      "description": "Turkish dotless i and dotted İ. Case mappings change under locale; toLowerCase is not an identity check."
+    },
+    {
+      "id": "width-twins",
+      "description": "Fullwidth and halfwidth forms. Ａ is not A; tools that normalize width silently lie."
+    },
+    {
+      "id": "cli-glob-hazards",
+      "description": "Names that inject into command lines and glob patterns. Breaks naive shell-outs and agent-issued commands."
+    },
+    {
+      "id": "whitespace-lookalikes",
+      "description": "Non-breaking, thin, and ideographic spaces that look exactly like the space you typed."
+    },
+    {
+      "id": "deep-nesting",
+      "description": "Deep directory trees that push total path length past classic 4096-byte limits."
+    },
+    {
+      "id": "legacy-mojibake",
+      "description": "Names that are what a latin-1→UTF-8 double-encoding produces. Common in archives rescued from old systems."
+    },
+    {
+      "id": "ntfs-streams",
+      "description": "Colon-suffixed names: alternate data streams on NTFS, ordinary filenames on POSIX."
+    },
+    {
+      "id": "dash-confusables",
+      "description": "Hyphen lookalikes: soft hyphen, minus sign, em dash. Flag parsing and option matching gone wrong."
+    }
+  ],
+  "entries": [
+    {
+      "id": "unicode-normalization-01",
+      "path": "café.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "cafe",
+      "why": "NFC (precomposed) twin of group \"cafe\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-02",
+      "path": "café.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "cafe",
+      "why": "NFD (decomposed) twin of group \"cafe\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-03",
+      "path": "naïve.md",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "naive",
+      "why": "NFC (precomposed) twin of group \"naive\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-04",
+      "path": "naïve.md",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "naive",
+      "why": "NFD (decomposed) twin of group \"naive\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-05",
+      "path": "resumé.pdf",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "resume",
+      "why": "NFC (precomposed) twin of group \"resume\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-06",
+      "path": "resumé.pdf",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "resume",
+      "why": "NFD (decomposed) twin of group \"resume\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-07",
+      "path": "jalapeño.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "jalapeno",
+      "why": "NFC (precomposed) twin of group \"jalapeno\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-08",
+      "path": "jalapeño.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "jalapeno",
+      "why": "NFD (decomposed) twin of group \"jalapeno\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-09",
+      "path": "Grüße.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "grusse",
+      "why": "NFC (precomposed) twin of group \"grusse\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-10",
+      "path": "Grübe.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "grusse",
+      "why": "NFD (decomposed) twin of group \"grusse\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-11",
+      "path": "ångström.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "angstrom",
+      "why": "NFC (precomposed) twin of group \"angstrom\"; visually identical to its NFD sibling."
+    },
+    {
+      "id": "unicode-normalization-12",
+      "path": "ängström.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "angstrom",
+      "why": "NFD (decomposed) twin of group \"angstrom\"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216)."
+    },
+    {
+      "id": "unicode-normalization-13",
+      "path": "ﬁle.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "ligature-fi",
+      "why": "fi ligature U+FB01; NFKC-folds to \"file.txt\" but differs in bytes. Verified: APFS treats it as equal to the ASCII name — creating both fails with EEXIST."
+    },
+    {
+      "id": "unicode-normalization-14",
+      "path": "file.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "ligature-fi",
+      "why": "Plain ASCII twin of the fi-ligature name; collides under NFKC normalization — and empirically on APFS volumes."
+    },
+    {
+      "id": "unicode-normalization-15",
+      "path": "ⅩI.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "roman-xii",
+      "why": "Roman numeral IX (U+2169) + I; NFKC-folds to \"XII\"."
+    },
+    {
+      "id": "unicode-normalization-16",
+      "path": "XII.txt",
+      "category": "unicode-normalization",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "roman-xii",
+      "why": "ASCII twin of the Roman-numeral name; collides under NFKC."
+    },
+    {
+      "id": "combining-marks-01",
+      "path": "ärchive.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "a + combining diaeresis: identical glyph to ä, different bytes."
+    },
+    {
+      "id": "combining-marks-02",
+      "path": "évent.log",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "e + combining acute; NFC-canonical twin of é."
+    },
+    {
+      "id": "combining-marks-03",
+      "path": "x̸fail.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "x + combining long solidus overlay: looks like a struck-through x."
+    },
+    {
+      "id": "combining-marks-04",
+      "path": "A⃝ot.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "A + combining enclosing circle."
+    },
+    {
+      "id": "combining-marks-05",
+      "path": "ọption.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "o + combining dot below."
+    },
+    {
+      "id": "combining-marks-06",
+      "path": "Z̶a̷l͡g͛o̖.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Mild Zalgo: stacked combining marks; truncation mid-cluster produces broken glyphs."
+    },
+    {
+      "id": "combining-marks-07",
+      "path": "çédule.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Stacked combining cedilla + acute in canonical order; reordering either mark yields an equal name under NFC."
+    },
+    {
+      "id": "combining-marks-08",
+      "path": "é́rror.txt",
+      "category": "combining-marks",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Doubled combining acute: NFC does not deduplicate repeated marks."
+    },
+    {
+      "id": "emoji-zwj-01",
+      "path": "👨\u200D👩\u200D👧.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Family emoji: three people joined by zero-width joiners; one grapheme, eight codepoints."
+    },
+    {
+      "id": "emoji-zwj-02",
+      "path": "🏳️\u200D🌈.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Rainbow flag: white flag + VS16 + ZWJ + rainbow; splitting on codepoint boundaries corrupts it."
+    },
+    {
+      "id": "emoji-zwj-03",
+      "path": "🇲🇽.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Regional-indicator pair (MX flag); the same two indicators in reverse order is a different flag."
+    },
+    {
+      "id": "emoji-zwj-04",
+      "path": "👍🏽.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Thumbs-up + medium skin-tone modifier; modifiers attach without ZWJ."
+    },
+    {
+      "id": "emoji-zwj-05",
+      "path": "1️⃣.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Keycap 1: digit + VS16 + combining enclosing keycap."
+    },
+    {
+      "id": "emoji-zwj-06",
+      "path": "👨🏻\u200D💻.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Man technologist: base + skin tone + ZWJ + laptop."
+    },
+    {
+      "id": "emoji-zwj-07",
+      "path": "❤️\u200D🔥.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Heart on fire: heart + VS16 + ZWJ + flame."
+    },
+    {
+      "id": "emoji-zwj-08",
+      "path": "💩.txt",
+      "category": "emoji-zwj",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Single emoji outside BMP; 4-byte UTF-8, surrogate pair in UTF-16 — truncation at byte 3 is invalid UTF-8."
+    },
+    {
+      "id": "bidi-rtl-01",
+      "path": "file\u202Ename.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "RIGHT-TO-LEFT OVERRIDE inside the name; renders \"eman.txt\" reversed in many UIs. Classic spoof."
+    },
+    {
+      "id": "bidi-rtl-02",
+      "path": "\u200Fstart.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Leading RIGHT-TO-LEFT MARK: invisible, but changes display order of mixed runs."
+    },
+    {
+      "id": "bidi-rtl-03",
+      "path": "שלום.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Hebrew \"shalom\": pure RTL filename; sorts opposite to how it displays next to Latin names."
+    },
+    {
+      "id": "bidi-rtl-04",
+      "path": "مرحبا.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Arabic \"marhaba\": RTL with shaping — the stored codepoints differ from the displayed glyphs."
+    },
+    {
+      "id": "bidi-rtl-05",
+      "path": "a\u202Db\u202Ec.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "LEFT-TO-RIGHT OVERRIDE then RIGHT-TO-LEFT OVERRIDE: display order ≠ logical order."
+    },
+    {
+      "id": "bidi-rtl-06",
+      "path": "name\u2066LRI\u2069.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "LEFT-TO-RIGHT ISOLATE + POP DIRECTIONAL ISOLATE (U+2066/U+2069)."
+    },
+    {
+      "id": "bidi-rtl-07",
+      "path": "tail\u200F.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Trailing RLM: two names byte-different, visually identical."
+    },
+    {
+      "id": "bidi-rtl-08",
+      "path": "٣٥٩.txt",
+      "category": "bidi-rtl",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Arabic-Indic digits ٣٥٩: not ASCII 359; numeric parsers and humans both misread it."
+    },
+    {
+      "id": "control-chars-01",
+      "path": "li\u000Ane.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Embedded newline: corrupts line-oriented logs, shell scripts, and CSV exports of file lists."
+    },
+    {
+      "id": "control-chars-02",
+      "path": "ta\u0009b.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Embedded tab: breaks column-aligned listings and tab-completion."
+    },
+    {
+      "id": "control-chars-03",
+      "path": "es\u001Bc.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Embedded ESC: terminal escape-injection vehicle when a tool prints filenames."
+    },
+    {
+      "id": "control-chars-04",
+      "path": "de\u007Fl.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Embedded DEL (U+007F)."
+    },
+    {
+      "id": "control-chars-05",
+      "path": "c1\u009B.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "C1 CSI (U+009B) — equivalent of ESC [ in a single byte of latin-1; escapes terminals that decode it."
+    },
+    {
+      "id": "control-chars-06",
+      "path": "cr\u000Dname.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Embedded carriage return: overwrites the line in most terminals when printed."
+    },
+    {
+      "id": "control-chars-07",
+      "path": "vt\u000Bname.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Vertical tab in a name."
+    },
+    {
+      "id": "control-chars-08",
+      "path": "ff\u000Cname.txt",
+      "category": "control-chars",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Form feed in a name; some terminals clear the screen."
+    },
+    {
+      "id": "bom-invisibles-01",
+      "path": "\uFEFFbom.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Leading BOM U+FEFF: invisible in editors, first byte differs."
+    },
+    {
+      "id": "bom-invisibles-02",
+      "path": "zw\u200Bsp.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Zero-width space U+200B: the most common invisible-difference bug in filenames and identifiers."
+    },
+    {
+      "id": "bom-invisibles-03",
+      "path": "zero\u200Cwidth\u200Djoin.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "ZWNJ + ZWJ inside a name: both invisible, both semantically meaningful to Unicode algorithms."
+    },
+    {
+      "id": "bom-invisibles-04",
+      "path": "wj\u2060.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Word joiner U+2060: invisible no-break; equals nothing under any normalization."
+    },
+    {
+      "id": "bom-invisibles-05",
+      "path": "it\u2062times.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Invisible times U+2062."
+    },
+    {
+      "id": "bom-invisibles-06",
+      "path": "sep\u2063rated.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Invisible separator U+2063."
+    },
+    {
+      "id": "bom-invisibles-07",
+      "path": "mid\uFEFFbom.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "BOM mid-name: equally invisible, breaks prefix/suffix matching."
+    },
+    {
+      "id": "bom-invisibles-08",
+      "path": "᠎separator.txt",
+      "category": "bom-invisibles",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Mongolian vowel separator U+180E: was whitespace in older Unicode; now format char."
+    },
+    {
+      "id": "windows-reserved-01",
+      "path": "CON",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "DOS console device; on Windows this name resolves to a device, not a file."
+    },
+    {
+      "id": "windows-reserved-02",
+      "path": "PRN",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "DOS printer device: uncreatable as a filename on Windows for 40 years and counting."
+    },
+    {
+      "id": "windows-reserved-03",
+      "path": "AUX",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "DOS auxiliary device."
+    },
+    {
+      "id": "windows-reserved-04",
+      "path": "NUL.dll",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "NUL with an extension is still reserved on Windows."
+    },
+    {
+      "id": "windows-reserved-05",
+      "path": "COM1.txt",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "COM1 with extension: still resolves to the serial device on Windows."
+    },
+    {
+      "id": "windows-reserved-06",
+      "path": "COM9",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Last classic COM slot."
+    },
+    {
+      "id": "windows-reserved-07",
+      "path": "LPT1",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Parallel port device name."
+    },
+    {
+      "id": "windows-reserved-08",
+      "path": "LPT2.out",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "LPT2 with an extension: the suffix does not un-reserve the device name."
+    },
+    {
+      "id": "windows-reserved-09",
+      "path": "CON.tar.gz",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "CON at the start of a dotted name: still reserved — archives containing it fail to extract on Windows."
+    },
+    {
+      "id": "windows-reserved-10",
+      "path": "aux.d",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "AUX as a directory-style name; the Windows path bug class fixed in Kilo Code PR #7834."
+    },
+    {
+      "id": "windows-reserved-11",
+      "path": "nul.txt",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Lowercase nul.txt is equally reserved."
+    },
+    {
+      "id": "windows-reserved-12",
+      "path": "clock$.txt",
+      "category": "windows-reserved",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Historic NT 4 device name; still special in some layers."
+    },
+    {
+      "id": "trailing-separators-01",
+      "path": "file. ",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Trailing dot+space: Win32 strips both, so the name roundtrips to \"file\" and back never matches."
+    },
+    {
+      "id": "trailing-separators-02",
+      "path": "file..",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Trailing double dot: Windows strips all trailing dots."
+    },
+    {
+      "id": "trailing-separators-03",
+      "path": "dir .",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Space before the trailing dot; stripped differently per API layer on Windows."
+    },
+    {
+      "id": "trailing-separators-04",
+      "path": "trail ",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Trailing space alone: silently dropped by Win32, kept by POSIX."
+    },
+    {
+      "id": "trailing-separators-05",
+      "path": "sp ace. ..",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Interior spaces plus trailing dot-dot-space soup."
+    },
+    {
+      "id": "trailing-separators-06",
+      "path": "ends...",
+      "category": "trailing-separators",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Three trailing dots: Windows keeps exactly this name only through \\? paths."
+    },
+    {
+      "id": "separator-lookalikes-01",
+      "path": "a:b.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Colon in a name: legal on POSIX, a drive/ADS separator on Windows."
+    },
+    {
+      "id": "separator-lookalikes-02",
+      "path": "C:\\drive.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Literal backslash: a plain byte on POSIX, a path separator on Windows."
+    },
+    {
+      "id": "separator-lookalikes-03",
+      "path": "\\leading.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Leading backslash: absolute-path confusion on Windows."
+    },
+    {
+      "id": "separator-lookalikes-04",
+      "path": "a\\b\\c.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Backslashes mid-name: three components on Windows, one on POSIX."
+    },
+    {
+      "id": "separator-lookalikes-05",
+      "path": "a:b:c.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Two colons: NTFS sees stream separators, POSIX sees a weird name."
+    },
+    {
+      "id": "separator-lookalikes-06",
+      "path": "⧸slash.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Big solidus U+29F8: looks like /, is a math symbol."
+    },
+    {
+      "id": "separator-lookalikes-07",
+      "path": "／fullwidth-slash.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth solidus U+FF0F: renders as a path separator, sorts as punctuation."
+    },
+    {
+      "id": "separator-lookalikes-08",
+      "path": "﹨small-backslash.txt",
+      "category": "separator-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Small reverse solidus U+FE68."
+    },
+    {
+      "id": "length-limits-01",
+      "path": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.txt",
+      "category": "length-limits",
+      "platforms": [],
+      "why": "255 ASCII chars + \".txt\" = 259 units: over the ext4 255-byte limit, over APFS 255-UTF-16-char limit, over classic Win32 MAX_PATH budget. Exists to test tool error handling."
+    },
+    {
+      "id": "length-limits-02",
+      "path": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "category": "length-limits",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Exactly 255 bytes: the classic ext4 boundary — succeeds, but one more byte fails."
+    },
+    {
+      "id": "length-limits-03",
+      "path": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "category": "length-limits",
+      "platforms": [],
+      "why": "256 bytes: fails on ext4 and (as 256 UTF-16 chars) on APFS; exists to test error handling."
+    },
+    {
+      "id": "length-limits-04",
+      "path": "éééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééééé.txt",
+      "category": "length-limits",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "100 é (200 UTF-8 bytes, 100 UTF-16 units): passes APFS, passes ext4, demonstrates units confusion."
+    },
+    {
+      "id": "length-limits-05",
+      "path": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀.txt",
+      "category": "length-limits",
+      "platforms": [],
+      "why": "128 emoji (512 UTF-8 bytes, 256 UTF-16 units): over ext4 bytes AND APFS units; a 4-byte/2-unit divergence demo."
+    },
+    {
+      "id": "length-limits-06",
+      "path": "😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀.txt",
+      "category": "length-limits",
+      "platforms": [
+        "darwin",
+        "win32"
+      ],
+      "why": "120 emoji (480 UTF-8 bytes, 240 UTF-16 units + \".txt\"): within APFS, over ext4 — the exact OS-dependent split the corpus exists for."
+    },
+    {
+      "id": "case-collisions-01",
+      "path": "README.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "readme",
+      "why": "Uppercase twin; collides with lowercase sibling on case-insensitive filesystems."
+    },
+    {
+      "id": "case-collisions-02",
+      "path": "readme.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "readme",
+      "why": "Lowercase twin of README.txt."
+    },
+    {
+      "id": "case-collisions-03",
+      "path": "Makefile",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "makefile",
+      "why": "Uppercase twin; collides with Makefile on case-insensitive filesystems (macOS, Windows)."
+    },
+    {
+      "id": "case-collisions-04",
+      "path": "MAKEFILE",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "makefile",
+      "why": "Lowercase twin of MAKEFILE; both names coexist only on case-sensitive volumes."
+    },
+    {
+      "id": "case-collisions-05",
+      "path": "İstanbul.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "istanbul",
+      "why": "Dotted capital İ (U+0130): toLowerCase gives i + combining dot — not \"i\"."
+    },
+    {
+      "id": "case-collisions-06",
+      "path": "istanbul.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "istanbul",
+      "why": "ASCII twin that İstanbul.toLowerCase() does NOT equal in a Turkish locale."
+    },
+    {
+      "id": "case-collisions-07",
+      "path": "K.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "kelvin",
+      "why": "Kelvin sign U+212A: case-folds to plain k — equal under caseless compare, different bytes."
+    },
+    {
+      "id": "case-collisions-08",
+      "path": "k.txt",
+      "category": "case-collisions",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "kelvin",
+      "why": "ASCII k; caseless twin of the Kelvin-sign name."
+    },
+    {
+      "id": "locale-casing-01",
+      "path": "ı.txt",
+      "category": "locale-casing",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Dotless ı (U+0131): Turkish lowercase of I; toUpperCase gives İ, not I."
+    },
+    {
+      "id": "locale-casing-02",
+      "path": "I-dotted.txt",
+      "category": "locale-casing",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "ASCII I with a tempting dotted sibling; locale-sensitive casing diverges."
+    },
+    {
+      "id": "locale-casing-03",
+      "path": "Diyarbakır.txt",
+      "category": "locale-casing",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Turkish place name with dotless ı; breaks case-insensitive dedupe under tr locale."
+    },
+    {
+      "id": "locale-casing-04",
+      "path": "straße.txt",
+      "category": "locale-casing",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "ß: uppercase SS, so \"STRASSE\" equals it under full case folding but not byte compare."
+    },
+    {
+      "id": "width-twins-01",
+      "path": "ＡＢＣ.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth ABC: looks like ABC in many fonts, sorts and matches nowhere near it."
+    },
+    {
+      "id": "width-twins-02",
+      "path": "ｶﾞﾀﾀ.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Halfwidth katakana ガンタ (ﾊﾞﾝﾀﾞﾑ-style): NFKC-folds to the fullwidth form."
+    },
+    {
+      "id": "width-twins-03",
+      "path": "　.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Ideographic space U+3000 as the whole name: whitespace, but not the space bar."
+    },
+    {
+      "id": "width-twins-04",
+      "path": "１２３.log",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth digits １２３: numeric-looking, not parseable as numbers."
+    },
+    {
+      "id": "width-twins-05",
+      "path": "ＧＯ.md",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth ＧＯ: looks like GO in CJK contexts, matches nothing in ASCII tooling."
+    },
+    {
+      "id": "width-twins-06",
+      "path": "ｱﾚｿ.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Halfwidth パス (\"path\")."
+    },
+    {
+      "id": "width-twins-07",
+      "path": "＃tag.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth # : renders like a comment marker, hashes nothing."
+    },
+    {
+      "id": "width-twins-08",
+      "path": "＝＝.txt",
+      "category": "width-twins",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Fullwidth ＝＝ pair: looks like a comparison operator, is two identifier letters."
+    },
+    {
+      "id": "cli-glob-hazards-01",
+      "path": "--flag.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Leading dashes: naive shell-outs treat it as an option; needs ./ or -- separation."
+    },
+    {
+      "id": "cli-glob-hazards-02",
+      "path": "-rf",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Exactly -rf: catastrophic as a bare argument to rm."
+    },
+    {
+      "id": "cli-glob-hazards-03",
+      "path": "*",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Literal asterisk name: globs to every sibling if unquoted."
+    },
+    {
+      "id": "cli-glob-hazards-04",
+      "path": "?",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Literal question mark: single-char glob."
+    },
+    {
+      "id": "cli-glob-hazards-05",
+      "path": "[a-z]",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Literal bracket expression as a name."
+    },
+    {
+      "id": "cli-glob-hazards-06",
+      "path": "{a,b}",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Brace expansion pattern as a name."
+    },
+    {
+      "id": "cli-glob-hazards-07",
+      "path": "$HOME.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Dollar-name: expands in unquoted shells."
+    },
+    {
+      "id": "cli-glob-hazards-08",
+      "path": "`tick`.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Backticks: command substitution in unquoted contexts."
+    },
+    {
+      "id": "cli-glob-hazards-09",
+      "path": "a;b.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Semicolon: statement separator injection."
+    },
+    {
+      "id": "cli-glob-hazards-10",
+      "path": "a|b.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Pipe: pipeline injection."
+    },
+    {
+      "id": "cli-glob-hazards-11",
+      "path": "a>b.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Angle bracket: redirect injection."
+    },
+    {
+      "id": "cli-glob-hazards-12",
+      "path": "a'quote.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Unbalanced single quote: breaks quoted shell composition."
+    },
+    {
+      "id": "cli-glob-hazards-13",
+      "path": "a\"dquote.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Unbalanced double quote."
+    },
+    {
+      "id": "cli-glob-hazards-14",
+      "path": "..dotdot.txt",
+      "category": "cli-glob-hazards",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Leading .. — not a traversal, but rejected by paranoid validators; the false-positive twin of \"../\"."
+    },
+    {
+      "id": "whitespace-lookalikes-01",
+      "path": "nb sp.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Non-breaking space U+00A0: the classic \"why does this path not match\" bug."
+    },
+    {
+      "id": "whitespace-lookalikes-02",
+      "path": "thin\u2009sp.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Thin space U+2009: invisible at normal sizes, breaks exact whitespace matching."
+    },
+    {
+      "id": "whitespace-lookalikes-03",
+      "path": "en\u2002sp.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "En space U+2002: the width of a typeset N, and not the space bar."
+    },
+    {
+      "id": "whitespace-lookalikes-04",
+      "path": "em\u2003sp.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Em space U+2003: the widest common space; still equal to nothing under NFC."
+    },
+    {
+      "id": "whitespace-lookalikes-05",
+      "path": "hair\u200Asp.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Hair space U+200A: invisible at normal font sizes."
+    },
+    {
+      "id": "whitespace-lookalikes-06",
+      "path": "  leading.txt",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Two leading ASCII spaces: legal, invisible in listings, trimmed by over-eager tools."
+    },
+    {
+      "id": "whitespace-lookalikes-07",
+      "path": "trailing.txt  ",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Two trailing ASCII spaces; also Windows-stripped."
+    },
+    {
+      "id": "whitespace-lookalikes-08",
+      "path": "   ",
+      "category": "whitespace-lookalikes",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Spaces-only name: whitespace, empty, and visible all at once."
+    },
+    {
+      "id": "deep-nesting-01",
+      "path": "a/a/a/a/a/a/a/a/a/a/leaf.txt",
+      "category": "deep-nesting",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "10-level tree; total path still short."
+    },
+    {
+      "id": "deep-nesting-02",
+      "path": "d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/d/leaf.txt",
+      "category": "deep-nesting",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "30 levels: past some tool recursion limits, under OS limits."
+    },
+    {
+      "id": "deep-nesting-03",
+      "path": "n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/n/leaf.txt",
+      "category": "deep-nesting",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "50 levels: each component legal, total path tests buffer sizes."
+    },
+    {
+      "id": "deep-nesting-04",
+      "path": "z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/z/leaf.txt",
+      "category": "deep-nesting",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "100 levels (~201 bytes total): over the classic 4096-byte PATH_MAX only when components grow; breaks naive recursive walkers first."
+    },
+    {
+      "id": "legacy-mojibake-01",
+      "path": "cafÃ©.txt",
+      "category": "legacy-mojibake",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Ã© — what \"café\" becomes after a latin-1→UTF-8 double encode; ubiquitous in rescued archives."
+    },
+    {
+      "id": "legacy-mojibake-02",
+      "path": "Ã±.txt",
+      "category": "legacy-mojibake",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Ã± — what ñ becomes after a latin-1 to UTF-8 double encode; common in old archives."
+    },
+    {
+      "id": "legacy-mojibake-03",
+      "path": "�replaced.txt",
+      "category": "legacy-mojibake",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "U+FFFD replacement character: what losses look like after a bad conversion."
+    },
+    {
+      "id": "legacy-mojibake-04",
+      "path": "ŠŸÅ.txt",
+      "category": "legacy-mojibake",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "ŠŸÅ — central-European mojibake cluster."
+    },
+    {
+      "id": "ntfs-streams-01",
+      "path": "file.txt:stream",
+      "category": "ntfs-streams",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "On NTFS this creates an alternate data stream on file.txt, not a file; on POSIX it is one ordinary name."
+    },
+    {
+      "id": "ntfs-streams-02",
+      "path": "file.txt:$DATA",
+      "category": "ntfs-streams",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "The ::$DATA stream suffix; reserved syntax on Windows."
+    },
+    {
+      "id": "ntfs-streams-03",
+      "path": "file:",
+      "category": "ntfs-streams",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "Trailing colon: an empty stream name on NTFS, a valid POSIX name."
+    },
+    {
+      "id": "ntfs-streams-04",
+      "path": "photo.jpg:thumbnail",
+      "category": "ntfs-streams",
+      "platforms": [
+        "darwin",
+        "linux"
+      ],
+      "why": "ADS used by Windows Explorer; archive tools disagree about what to store."
+    },
+    {
+      "id": "dash-confusables-01",
+      "path": "soft\u00ADhyphen.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Soft hyphen U+00AD: invisible, dropped by some renderers, kept in bytes."
+    },
+    {
+      "id": "dash-confusables-02",
+      "path": "‐soft.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Hyphen U+2010 vs ASCII -: flag parsers disagree."
+    },
+    {
+      "id": "dash-confusables-03",
+      "path": "‑nonbreak.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Non-breaking hyphen U+2011."
+    },
+    {
+      "id": "dash-confusables-04",
+      "path": "‒figure.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Figure dash U+2012: typographic digit-range dash, not a flag prefix or a minus."
+    },
+    {
+      "id": "dash-confusables-05",
+      "path": "–en.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "En dash U+2013: common in pasted text, not a flag prefix."
+    },
+    {
+      "id": "dash-confusables-06",
+      "path": "—em.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "why": "Em dash U+2014: pasted prose uses it constantly; option parsers do not."
+    },
+    {
+      "id": "dash-confusables-07",
+      "path": "−minus.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "minus",
+      "why": "Minus sign U+2212: mathematically a hyphen, textually not one."
+    },
+    {
+      "id": "dash-confusables-08",
+      "path": "-hyphen.txt",
+      "category": "dash-confusables",
+      "platforms": [
+        "darwin",
+        "linux",
+        "win32"
+      ],
+      "group": "minus",
+      "why": "ASCII hyphen twin of the minus-sign name; equal to the eye, unequal to strcmp."
+    }
+  ],
+  "entryCount": 150
+}

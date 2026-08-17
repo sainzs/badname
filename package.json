@@ -1,0 +1,49 @@
+{
+  "name": "@sainzs/pathological",
+  "version": "0.1.0",
+  "description": "A maintained corpus of pathological file paths — Unicode normalization, reserved names, bidi, control chars — plus a harness to test any tool against them.",
+  "license": "MIT",
+  "author": "Santiago Sainz <214846064+sainzs@users.noreply.github.com> (https://github.com/sainzs)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sainzs/pathological.git"
+  },
+  "homepage": "https://github.com/sainzs/pathological#readme",
+  "bugs": "https://github.com/sainzs/pathological/issues",
+  "keywords": [
+    "unicode",
+    "normalization",
+    "nfc",
+    "nfd",
+    "filesystem",
+    "testing",
+    "fuzzing",
+    "fixtures",
+    "ci",
+    "developer-tools",
+    "codex"
+  ],
+  "type": "module",
+  "bin": {
+    "pathological": "bin/pathological.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "corpus/",
+    "scripts/build-corpus.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "corpus:build": "node scripts/build-corpus.js",
+    "corpus:validate": "node scripts/build-corpus.js --check",
+    "check": "npm run corpus:validate && npm test && node bin/pathological.js check ."
+  },
+  "dependencies": {}
+}
