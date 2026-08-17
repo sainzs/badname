@@ -6,8 +6,11 @@ import { roundtrip, mangled } from '../lib/roundtrip.js'
 
 test('a no-op command survives cleanly', async () => {
   const report = await roundtrip('node -e "0"')
-  assert.equal(report.results.length, 0)
-  assert.ok(report.survived.length > 100, `only ${report.survived.length} survived`)
+  // Zero changes is the invariant; the absolute count of seeded fixtures
+  // differs per platform (POSIX-only entries, NTFS case-collisions), so
+  // only a floor is asserted there.
+  assert.equal(report.results.length, 0, `unexpected changes: ${JSON.stringify(report.results.slice(0, 5))}`)
+  assert.ok(report.survived.length >= 90, `only ${report.survived.length} survived`)
   assert.equal(mangled(report), false)
 })
 

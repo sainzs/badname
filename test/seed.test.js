@@ -12,7 +12,9 @@ test('seed materializes most of the corpus and reports the rest honestly', async
   const corpus = loadCorpus()
 
   const attemptable = corpus.entries.filter(e => creatableOn(e)).length
-  assert.ok(report.created.length > 100, `created only ${report.created.length}`)
+  // Floor is 90, not 100+: Windows legitimately seeds fewer (POSIX-only
+  // entries excluded, NTFS case-collisions recorded instead of created).
+  assert.ok(report.created.length > 90, `created only ${report.created.length}`)
   assert.equal(
     report.created.length + report.collided.length + report.failed.length,
     attemptable,
