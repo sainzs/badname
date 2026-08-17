@@ -51,10 +51,13 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 
 ## Before you submit — human checklist
 
-- [ ] **Fix GitHub billing** (Settings → Billing): Actions have been locked
-      account-wide since ~2026-08-09 ("account is locked due to a billing
-      issue" on every workflow run). After fixing, re-run the failed CI on
-      pathological so the badge is green — reviewers click through.
+- [x] **GitHub billing fixed** (2026-08-17) — full 3-OS CI matrix green:
+      ubuntu / macOS / Windows × Node 20/24 + tar roundtrips + self-check
+      ([latest run](https://github.com/sainzs/pathological/actions)).
+- [x] **Releases**: [v0.1.0](https://github.com/sainzs/pathological/releases/tag/v0.1.0) ·
+      [v0.1.1](https://github.com/sainzs/pathological/releases/tag/v0.1.1)
+      (two verified macOS bsdtar findings recorded in the corpus — found by
+      this project's own CI, which is the pitch).
 - [ ] **GitHub profile visibility public** (form requirement).
 - [ ] **Fill in** your ChatGPT email + OpenAI Organization ID above.
 - [ ] **Optional but strengthening:** publish to npm (`npm login` then
