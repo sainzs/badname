@@ -46,7 +46,7 @@ come with a story — the tool that broke, the platform, the error.
 ```sh
 npm install       # nothing — zero runtime deps; only run to get the lockfile
 npm test          # node:test suite
-npm run check     # corpus:validate + tests + pathological check .
+npm run check     # corpus:validate + tests + memex check .
 ```
 
 Zero runtime dependencies is a project invariant. Node ≥ 20.

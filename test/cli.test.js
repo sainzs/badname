@@ -7,7 +7,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
-const BIN = join(ROOT, 'bin', 'pathological.js')
+const BIN = join(ROOT, 'bin', 'memex.js')
 
 function run (args, opts = {}) {
   return spawnSync(process.execPath, [BIN, ...args], { encoding: 'utf8', ...opts })
@@ -33,10 +33,10 @@ test('unknown command exits 2', () => {
 })
 
 test('check exits 0 on a clean tree and 1 on hazards', async () => {
-  const clean = await mkdtemp(join(tmpdir(), 'pathological-cli-'))
+  const clean = await mkdtemp(join(tmpdir(), 'memex-cli-'))
   assert.equal(run(['check', clean]).status, 0)
 
-  const dirty = await mkdtemp(join(tmpdir(), 'pathological-cli-'))
+  const dirty = await mkdtemp(join(tmpdir(), 'memex-cli-'))
   await writeFile(join(dirty, 'CON'), 'x')
   const p = run(['check', dirty])
   assert.equal(p.status, 1)
@@ -45,7 +45,7 @@ test('check exits 0 on a clean tree and 1 on hazards', async () => {
 })
 
 test('check --json emits machine-readable output', async () => {
-  const dirty = await mkdtemp(join(tmpdir(), 'pathological-cli-'))
+  const dirty = await mkdtemp(join(tmpdir(), 'memex-cli-'))
   await writeFile(join(dirty, 'CON'), 'x')
   const p = run(['check', dirty, '--json'])
   assert.equal(p.status, 1)
@@ -55,7 +55,7 @@ test('check --json emits machine-readable output', async () => {
 })
 
 test('seed writes into a fresh directory and exits 0', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-cli-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'memex-cli-seed-'))
   const inner = join(dir, 'sandbox')
   const p = run(['seed', inner])
   assert.equal(p.status, 0)

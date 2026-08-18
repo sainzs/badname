@@ -1,6 +1,6 @@
 # Codex for Open Source — Submission Packet
 
-Application vehicle: **[sainzs/pathological](https://github.com/sainzs/pathological)**
+Application vehicle: **[sainzs/memex](https://github.com/sainzs/memex)**
 Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by email)
 
 ## Form field map
@@ -11,7 +11,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 | Last name | Sainz |
 | Email | **[you] the email associated with your ChatGPT account** |
 | GitHub username | `sainzs` (profile visibility must be public) |
-| GitHub repository URL | `https://github.com/sainzs/pathological` (public ✓) |
+| GitHub repository URL | `https://github.com/sainzs/memex` (public ✓) |
 | Role | **Primary maintainer** |
 | Why does this repository qualify? | see below (≤500 chars) |
 | I'm interested in… | ☑ Codex Security ☑ API credits for my project |
@@ -23,7 +23,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 
 ### Why does this repository qualify? — 483 chars
 
-> pathological is the first shared corpus of file paths that silently break
+> memex is the first shared corpus of file paths that silently break
 > tools — Unicode NFC/NFD twins, Windows-reserved names, bidi overrides,
 > control characters. Born from my upstream fixes for exactly this bug class
 > (Kilo Code #7835 merged; OpenCode #32216, NFD patch-matching), it ships
@@ -53,15 +53,15 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 
 - [x] **GitHub billing fixed** (2026-08-17) — full 3-OS CI matrix green:
       ubuntu / macOS / Windows × Node 20/24 + tar roundtrips + self-check
-      ([latest run](https://github.com/sainzs/pathological/actions)).
-- [x] **Releases**: [v0.1.0](https://github.com/sainzs/pathological/releases/tag/v0.1.0) ·
-      [v0.1.1](https://github.com/sainzs/pathological/releases/tag/v0.1.1)
+      ([latest run](https://github.com/sainzs/memex/actions)).
+- [x] **Releases**: [v0.1.0](https://github.com/sainzs/memex/releases/tag/v0.1.0) ·
+      [v0.1.1](https://github.com/sainzs/memex/releases/tag/v0.1.1)
       (two verified macOS bsdtar findings recorded in the corpus — found by
       this project's own CI, which is the pitch).
 - [ ] **GitHub profile visibility public** (form requirement).
 - [ ] **Fill in** your ChatGPT email + OpenAI Organization ID above.
 - [ ] **Optional but strengthening:** publish to npm (`npm login` then
-      `npm publish` — ships as `@sainzs/pathological`; unscoped name taken)
+      `npm publish` — ships as `@sainzs/memex`; unscoped name taken)
       and swap this README badge line to the real npm badge; post once
       (Show HN "the Big List of Naughty Strings for file paths", r/node,
       OpenCode/Kilo communities) to seed organic stars before applying.
@@ -69,8 +69,8 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 
 ## Evidence links (for follow-up email if asked)
 
-- Repo: <https://github.com/sainzs/pathological> · Release:
-  [v0.1.0](https://github.com/sainzs/pathological/releases/tag/v0.1.0)
+- Repo: <https://github.com/sainzs/memex> · Release:
+  [v0.1.0](https://github.com/sainzs/memex/releases/tag/v0.1.0)
 - Provenance PRs (verified live 2026-08-17): Kilo Code
   [#7835](https://github.com/Kilo-Org/kilocode/pull/7835) and
   [#7832](https://github.com/Kilo-Org/kilocode/pull/7832) — **merged**;
@@ -81,7 +81,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
   (EISDIR crash) — substantive, auto-closed by the repo's 2-hour
   contributing-guidelines bot on 2026-06-13, explicitly invited to reopen;
   revival is the top action in the core-maintainer track below.
-- Live demo of the thesis: `npx @sainzs/pathological roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'`
+- Live demo of the thesis: `npx @sainzs/memex roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'`
 
 ## Local verification (passes today)
 

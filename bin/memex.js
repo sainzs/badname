@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// pathological — the shared corpus of pathological file paths.
+// memex — the shared corpus of pathological file paths.
 //
-//   pathological check [dir]        scan a tree for corpus hazards (read-only)
-//   pathological seed [dir]         materialize fixtures into an empty sandbox
-//   pathological roundtrip -- <cmd> run a shell command in a seeded sandbox
-//   pathological list               print corpus entries
+//   memex check [dir]        scan a tree for corpus hazards (read-only)
+//   memex seed [dir]         materialize fixtures into an empty sandbox
+//   memex roundtrip -- <cmd> run a shell command in a seeded sandbox
+//   memex list               print corpus entries
 //
-// Run `pathological help <command>` for details.
+// Run `memex help <command>` for details.
 
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -17,15 +17,15 @@ import { roundtrip, mangled } from '../lib/roundtrip.js'
 import { formatCheckReport, formatSeedReport, formatRoundtripReport } from '../lib/report.js'
 
 const HELP = {
-  default: `pathological — the shared corpus of pathological file paths
+  default: `memex — the shared corpus of pathological file paths
 
 Usage:
-  pathological check [dir] [--skip name,...] [--json]
-  pathological seed [dir] [--category <id>] [--json]
-  pathological roundtrip -- <shell command> [--json]
-  pathological list [--category <id>] [--json]
-  pathological help [command]
-  pathological version
+  memex check [dir] [--skip name,...] [--json]
+  memex seed [dir] [--category <id>] [--json]
+  memex roundtrip -- <shell command> [--json]
+  memex list [--category <id>] [--json]
+  memex help [command]
+  memex version
 
 check      Read-only scan: reports files/dirs whose names are corpus members
            or Unicode twins of corpus members. Singleton hazards (CON, glob
@@ -38,10 +38,10 @@ seed       Writes the fixture tree into an empty (or new) directory. Entries
 roundtrip  Seeds a temp sandbox, runs your shell command inside it, then
            reports every fixture name that was renamed, normalized, or lost.
            Exits 1 on mangling. Example:
-             pathological roundtrip -- bash -c 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm -rf out.tar'
+             memex roundtrip -- bash -c 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm -rf out.tar'
 list       Print corpus entries (visible form; invisible chars escaped).
 
-Docs: https://github.com/sainzs/pathological`,
+Docs: https://github.com/sainzs/memex`,
 }
 
 function usage (code = 0) {
@@ -88,7 +88,7 @@ async function main () {
 
   if (cmd === 'seed') {
     const opts = parseFlags(rest, { '--json': true, '--category': 'category', '--force': true })
-    const dirArg = opts._[0] ?? join(tmpdir(), 'pathological-sandbox')
+    const dirArg = opts._[0] ?? join(tmpdir(), 'memex-sandbox')
     const dir = resolveSandbox(dirArg)
     const report = await seed(dir, { category: opts['--category'] })
     console.log(formatSeedReport(report, Boolean(opts['--json'])))
@@ -98,7 +98,7 @@ async function main () {
   if (cmd === 'roundtrip') {
     const dd = rest.indexOf('--')
     if (dd === -1 || rest.length <= dd + 1) {
-      console.error('usage: pathological roundtrip -- <shell command>')
+      console.error('usage: memex roundtrip -- <shell command>')
       process.exit(2)
     }
     const command = rest.slice(dd + 1).join(' ')
@@ -130,6 +130,6 @@ async function main () {
 }
 
 main().catch(err => {
-  console.error('pathological: ' + err.message)
+  console.error('memex: ' + err.message)
   process.exit(1)
 })

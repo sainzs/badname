@@ -6,7 +6,7 @@ import { join } from 'node:path'
 import { analyze, check } from '../lib/check.js'
 
 async function freshDir () {
-  return mkdtemp(join(tmpdir(), 'pathological-test-'))
+  return mkdtemp(join(tmpdir(), 'memex-test-'))
 }
 
 // --- pure analysis (works identically on every volume) ----------------------
