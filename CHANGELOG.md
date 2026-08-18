@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Corrected
+
+- Direction of the macOS bsdtar finding, verified byte-for-byte with archive
+  hexdumps: the archive stores names **faithfully (NFC)**; it is **extraction**
+  on macOS that writes them **NFD-decomposed** to disk (bsdtar 3.5.3 /
+  libarchive 3.7.4, APFS). Earlier notes said the archive normalized NFD→NFC;
+  the observable roundtrip effect is the same (NFC source, NFD result), but
+  the mechanism claim was backwards. Full evidence:
+  `docs/bugs/apple-bsdtar-nfd-extraction.md`.
+
 ## [0.1.1] — 2026-08-17
 
 ### Fixed

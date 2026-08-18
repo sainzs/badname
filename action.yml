@@ -1,0 +1,34 @@
+name: 'memex'
+description: 'Scan your repo for pathological file-path hazards (Unicode twins, reserved names, invisible characters) — one line of CI.'
+branding:
+  icon: 'alert-triangle'
+  color: 'purple'
+inputs:
+  directory:
+    description: 'Directory to scan (relative to repo root).'
+    required: false
+    default: '.'
+  all:
+    description: "'true' to also report lone twin names (stricter)."
+    required: false
+    default: 'false'
+  roundtrip:
+    description: 'Optional shell command to run inside a seeded sandbox; the step fails if it mangles fixture names.'
+    required: false
+    default: ''
+runs:
+  using: 'composite'
+  steps:
+    - name: memex check
+      shell: bash
+      run: |
+        set -e
+        FLAGS=""
+        if [ "${{ inputs.all }}" = "true" ]; then FLAGS="--all"; fi
+        node "${{ github.action_path }}/bin/memex.js" check ${{ inputs.directory }} $FLAGS
+    - name: memex roundtrip (optional)
+      if: ${{ inputs.roundtrip != '' }}
+      shell: bash
+      run: |
+        set -e
+        node "${{ github.action_path }}/bin/memex.js" roundtrip -- ${{ inputs.roundtrip }}

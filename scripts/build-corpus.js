@@ -85,7 +85,7 @@ const NORM_PAIRS = [
 ]
 for (const [nfc, nfd, group] of NORM_PAIRS) {
   add(nfc, 'unicode-normalization', `NFC (precomposed) twin of group "${group}"; visually identical to its NFD sibling.`, { group })
-  add(nfd, 'unicode-normalization', `NFD (decomposed) twin of group "${group}"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified in CI: GitHub macos-latest bsdtar returns this name NFC-normalized after a tar roundtrip (libarchive NFC pax headers).`, { group })
+  add(nfd, 'unicode-normalization', `NFD (decomposed) twin of group "${group}"; macOS HFS+ stores this form — byte-equality with the NFC name fails. The OpenCode apply_patch bug class (PR #32216). Verified byte-for-byte: macOS bsdtar 3.5.3 decomposes filenames at extraction (NFC in archive, NFD on disk) — see docs/bugs/apple-bsdtar-nfd-extraction.md.`, { group })
 }
 // NFKC compatibility twins
 add('\uFB01le.txt', 'unicode-normalization', 'fi ligature U+FB01; NFKC-folds to "file.txt" but differs in bytes. Verified: APFS treats it as equal to the ASCII name — creating both fails with EEXIST.', { group: 'ligature-fi' })

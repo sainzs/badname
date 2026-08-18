@@ -19,35 +19,34 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 | How will you use API credits? | see below (≤500 chars) |
 | Anything else we should know? | see below (≤500 chars) |
 
-## Answers (verified ≤500 characters)
+## Answers (proposal-shaped; verified ≤500 characters)
 
-### Why does this repository qualify? — 483 chars
+### Why does this repository qualify? — 427 chars
 
-> memex is the first shared corpus of file paths that silently break
-> tools — Unicode NFC/NFD twins, Windows-reserved names, bidi overrides,
-> control characters. Born from my upstream fixes for exactly this bug class
-> (Kilo Code #7835 merged; OpenCode #32216, NFD patch-matching), it ships
-> 150 curated fixtures across 19 categories plus a CI harness
-> (check/seed/roundtrip). Every archiver, sync engine, and AI coding agent
-> hits these bugs; until now no shared test corpus existed.
+> memex is the first shared corpus of file paths that silently break tools —
+> NFC/NFD twins, Windows-reserved names, bidi, control chars — with a CI
+> harness (check/seed/roundtrip). It already found two verified macOS tar
+> bugs (NFD-decomposing extraction; AppleDouble NAME_MAX overflow), and
+> tools adopt it as a one-line CI dependency. Born from my merged upstream
+> fixes for this exact bug class (Kilo Code #7835; OpenCode #32216).
 
-### How will you use API credits for your project? — 429 chars
+### How will you use API credits for your project? — 392 chars
 
-> Credits run the corpus flywheel: Codex mines real bug-fix commits in
-> popular repos to propose new fixtures, reviews fixture PRs (every entry
-> requires provenance), generates per-platform behavior matrices from the
-> macOS/Linux/Windows CI runs, and hardens the harness itself. Credits also
-> power Codex PR review and release automation across my other maintained
-> repos: santiagosainz-skills, random-access-themes, reckoner, registro.
+> A funded, measurable campaign: Codex runs memex fixtures against 30+
+> archivers/sync/agent tools, reproduces each failure as a minimal repro,
+> and files verified fix PRs upstream — corpus-derived regression tests ride
+> in on the fixes. Public metric in six months: "N bugs filed, M fixes
+> merged across K repos." Credits also power fixture-PR review and the
+> per-platform conformance matrix in CI.
 
-### Anything else we should know? — 405 chars
+### Anything else we should know? — 430 chars
 
-> I'm an active upstream contributor: two merged PRs in Kilo Code (~20k★),
-> including a Windows path-normalization fix, plus open Unicode/NFD fixes in
-> OpenCode (#32216, #32208) — the exact bug class this corpus encodes.
-> Maintainer portfolio: santiagosainz-skills, random-access-themes, reckoner,
-> registro (all MIT, CI-validated, released). Goal: make filename safety a
-> one-line CI check for every repository.
+> Active upstream contributor: 2 merged Kilo Code PRs (26k★), incl. a
+> Windows path-normalization fix; OpenCode NFD patch-matching fix (PR
+> #32216) — the bug class this corpus encodes. Both macOS tar findings are
+> being filed upstream (docs/bugs/) with memex as the reproducer. Portfolio
+> of maintained, CI-green OSS: santiagosainz-skills, random-access-themes,
+> reckoner, registro. Applying now, rolling; will reapply as adoption grows.
 
 ## Before you submit — human checklist
 
