@@ -26,7 +26,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 > pathological is the first shared corpus of file paths that silently break
 > tools — Unicode NFC/NFD twins, Windows-reserved names, bidi overrides,
 > control characters. Born from my upstream fixes for exactly this bug class
-> (Kilo Code #7834, merged; OpenCode #32216, NFD patch-matching), it ships
+> (Kilo Code #7835 merged; OpenCode #32216, NFD patch-matching), it ships
 > 150 curated fixtures across 19 categories plus a CI harness
 > (check/seed/roundtrip). Every archiver, sync engine, and AI coding agent
 > hits these bugs; until now no shared test corpus existed.
@@ -71,12 +71,16 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 
 - Repo: <https://github.com/sainzs/pathological> · Release:
   [v0.1.0](https://github.com/sainzs/pathological/releases/tag/v0.1.0)
-- Provenance PRs: Kilo Code
-  [#7834](https://github.com/Kilo-Org/kilocode/pull/7834) (class, merged
-  lineage), [#7835](https://github.com/Kilo-Org/kilocode/pull/7835),
-  [#7832](https://github.com/Kilo-Org/kilocode/pull/7832) (merged);
-  OpenCode [#32216](https://github.com/anomalyco/opencode/pull/32216),
-  [#32208](https://github.com/anomalyco/opencode/pull/32208)
+- Provenance PRs (verified live 2026-08-17): Kilo Code
+  [#7835](https://github.com/Kilo-Org/kilocode/pull/7835) and
+  [#7832](https://github.com/Kilo-Org/kilocode/pull/7832) — **merged**;
+  [#7834](https://github.com/Kilo-Org/kilocode/pull/7834) (same Windows-path
+  bug class, closed unmerged). OpenCode
+  [#32216](https://github.com/anomalyco/opencode/pull/32216) (NFC
+  apply_patch) and [#32208](https://github.com/anomalyco/opencode/pull/32208)
+  (EISDIR crash) — substantive, auto-closed by the repo's 2-hour
+  contributing-guidelines bot on 2026-06-13, explicitly invited to reopen;
+  revival is the top action in the core-maintainer track below.
 - Live demo of the thesis: `npx @sainzs/pathological roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'`
 
 ## Local verification (passes today)
