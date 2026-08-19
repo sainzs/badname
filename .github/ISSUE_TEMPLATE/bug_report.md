@@ -16,7 +16,7 @@ the escaped form). -->
 
 - OS + filesystem (e.g. macOS APFS, Linux ext4, Windows NTFS/Dev Drive):
 - Node version:
-- pathological version (`badname version`):
+- badname version (`badname version`):
 
 **Did a real tool break on this name?**
 

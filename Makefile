@@ -1,4 +1,4 @@
-# pathological — local dev entrypoints.
+# badname — local dev entrypoints.
 # CI runs the npm scripts directly; this Makefile is a convenience wrapper.
 
 .PHONY: check test corpus build clean

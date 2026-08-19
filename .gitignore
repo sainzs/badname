@@ -2,8 +2,8 @@ node_modules/
 npm-debug.log*
 *.tgz
 .DS_Store
-pathological-sandbox/
-.pathological-sandbox/
+badname-sandbox/
+.badname-sandbox/
 coverage/
 .idea/
 .vscode/

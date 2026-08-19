@@ -1,4 +1,4 @@
-# pathological — Agent Notes
+# badname — Agent Notes
 
 The shared corpus of pathological file paths + a harness to test tools
 against them. Zero runtime dependencies, Node ≥ 20. Definition of done:
@@ -7,14 +7,14 @@ against them. Zero runtime dependencies, Node ≥ 20. Definition of done:
 ## Commands
 
 ```sh
-npm run check          # corpus:validate + tests + pathological check .  (CI parity)
+npm run check          # corpus:validate + tests + badname check .  (CI parity)
 npm test               # node --test
 npm run corpus:build   # regenerate corpus/corpus.json + corpus/PLAIN.txt
 npm run corpus:validate # drift check only (no writes)
-node bin/pathological.js check [dir] [--json]
-node bin/pathological.js seed [dir] [--category X]
-node bin/pathological.js roundtrip -- '<shell cmd>'
-node bin/pathological.js list [--category X]
+node bin/badname.js check [dir] [--json]
+node bin/badname.js seed [dir] [--category X]
+node bin/badname.js roundtrip -- '<shell cmd>'
+node bin/badname.js list [--category X]
 ```
 
 ## Architecture
@@ -33,7 +33,7 @@ Three layers, strictly separated:
    safety validation, collision findings), `roundtrip.js` (seed → snapshot →
    run → classify), `report.js` (text/JSON formatting; invisible chars
    always escaped).
-3. **`bin/pathological.js`** — hand-rolled arg parsing (no deps), exit codes:
+3. **`bin/badname.js`** — hand-rolled arg parsing (no deps), exit codes:
    0 clean, 1 hazards/mangling, 2 usage error.
 
 ## Invariants
