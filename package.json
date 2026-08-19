@@ -37,7 +37,8 @@
     "scripts/build-corpus.js",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "assets/"
   ],
   "scripts": {
     "test": "node --test",
