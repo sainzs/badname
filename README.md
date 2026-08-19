@@ -3,7 +3,7 @@
 **The shared corpus of pathological file paths — and a harness to test any tool against them.**
 
 [![CI](https://github.com/sainzs/badname/actions/workflows/ci.yml/badge.svg)](https://github.com/sainzs/badname/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@sainzs/badname)](https://www.npmjs.com/package/@sainzs/badname)
+[![npm](https://img.shields.io/npm/v/@ssainzs/badname)](https://www.npmjs.com/package/@ssainzs/badname)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![corpus entries](https://img.shields.io/badge/corpus-150%20entries%20%7C%2019%20categories-green)](corpus/PLAIN.txt)
 
@@ -16,8 +16,8 @@ Every tool that touches filenames — archivers, sync engines, package managers,
 ## What it does
 
 ```sh
-npx @sainzs/badname check          # scan YOUR repo for hazardous names (read-only)
-npx @sainzs/badname roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
+npx @ssainzs/badname check          # scan YOUR repo for hazardous names (read-only)
+npx @ssainzs/badname roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
                                         # does YOUR tool mangle fixture names?
 ```
 
@@ -68,7 +68,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npx @sainzs/badname check .
+      - run: npx @ssainzs/badname check .
 ```
 
 Or vendor `corpus/PLAIN.txt` into your own test suite — it is data, MIT-licensed, no runtime required.

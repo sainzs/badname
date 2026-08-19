@@ -1,5 +1,5 @@
 {
-  "name": "@sainzs/badname",
+  "name": "@ssainzs/badname",
   "version": "0.1.1",
   "description": "A maintained corpus of pathological file paths — Unicode normalization, reserved names, bidi, control chars — plus a harness to test any tool against them.",
   "license": "MIT",
