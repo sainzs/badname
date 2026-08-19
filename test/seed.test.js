@@ -7,7 +7,7 @@ import { loadCorpus, creatableOn } from '../lib/corpus.js'
 import { seed, resolveSandbox } from '../lib/seed.js'
 
 test('seed materializes most of the corpus and reports the rest honestly', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-seed-'))
   const report = await seed(dir)
   const corpus = loadCorpus()
 
@@ -31,20 +31,20 @@ test('seed materializes most of the corpus and reports the rest honestly', async
 })
 
 test('seed creates deep trees with leaf files', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-seed-'))
   await seed(dir)
   const s = await stat(join(dir, ...Array(10).fill('a'), 'leaf.txt')).catch(() => null)
   assert.ok(s && s.isFile(), '10-level tree leaf exists')
 })
 
 test('seed refuses non-empty directories', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-seed-'))
   await seed(dir)
   await assert.rejects(() => seed(dir), /non-empty/)
 })
 
 test('seed with --category only seeds that category', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-seed-'))
   const report = await seed(dir, { category: 'ntfs-streams' })
   const corpus = loadCorpus()
   const expected = corpus.entries.filter(e => e.category === 'ntfs-streams' && creatableOn(e)).length
@@ -56,7 +56,7 @@ test('resolveSandbox refuses the current directory', () => {
 })
 
 test('filesystem collision findings on case-insensitive volumes are surfaced, not hidden', async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-seed-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-seed-'))
   const report = await seed(dir)
   if (process.platform === 'darwin') {
     // APFS: normalization- and case-insensitive — we expect both kinds.

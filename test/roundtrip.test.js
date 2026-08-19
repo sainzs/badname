@@ -42,7 +42,7 @@ test('tar preserves fixture names (byte-exact on Linux; NFC-tolerant on macOS bs
   const { spawnSync } = await import('node:child_process')
   const { seed } = await import('../lib/seed.js')
 
-  const dir = await mkdtemp(join(tmpdir(), 'pathological-tar-'))
+  const dir = await mkdtemp(join(tmpdir(), 'badname-tar-'))
   await seed(dir)
 
   const topNames = async () =>

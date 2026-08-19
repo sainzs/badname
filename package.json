@@ -1,15 +1,15 @@
 {
-  "name": "@sainzs/pathological",
+  "name": "@sainzs/badname",
   "version": "0.1.1",
   "description": "A maintained corpus of pathological file paths — Unicode normalization, reserved names, bidi, control chars — plus a harness to test any tool against them.",
   "license": "MIT",
   "author": "Santiago Sainz <214846064+sainzs@users.noreply.github.com> (https://github.com/sainzs)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sainzs/pathological.git"
+    "url": "git+https://github.com/sainzs/badname.git"
   },
-  "homepage": "https://github.com/sainzs/pathological#readme",
-  "bugs": "https://github.com/sainzs/pathological/issues",
+  "homepage": "https://github.com/sainzs/badname#readme",
+  "bugs": "https://github.com/sainzs/badname/issues",
   "keywords": [
     "unicode",
     "normalization",
@@ -25,7 +25,7 @@
   ],
   "type": "module",
   "bin": {
-    "pathological": "bin/pathological.js"
+    "badname": "bin/badname.js"
   },
   "engines": {
     "node": ">=20"
@@ -43,7 +43,7 @@
     "test": "node --test",
     "corpus:build": "node scripts/build-corpus.js",
     "corpus:validate": "node scripts/build-corpus.js --check",
-    "check": "npm run corpus:validate && npm test && node bin/pathological.js check ."
+    "check": "npm run corpus:validate && npm test && node bin/badname.js check ."
   },
   "dependencies": {}
 }

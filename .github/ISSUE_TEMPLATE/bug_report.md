@@ -9,14 +9,14 @@ assignees: ''
 **What happened?**
 
 <!-- Command you ran, output you saw. If a fixture name is involved, paste it
-with invisible characters as \uXXXX escapes (run `pathological list` to see
+with invisible characters as \uXXXX escapes (run `badname list` to see
 the escaped form). -->
 
 **Platform**
 
 - OS + filesystem (e.g. macOS APFS, Linux ext4, Windows NTFS/Dev Drive):
 - Node version:
-- pathological version (`pathological version`):
+- pathological version (`badname version`):
 
 **Did a real tool break on this name?**
 

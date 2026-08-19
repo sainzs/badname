@@ -1,30 +1,30 @@
-# pathological
+# badname
 
 **The shared corpus of pathological file paths — and a harness to test any tool against them.**
 
-[![CI](https://github.com/sainzs/pathological/actions/workflows/ci.yml/badge.svg)](https://github.com/sainzs/pathological/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@sainzs/pathological)](https://www.npmjs.com/package/@sainzs/pathological)
+[![CI](https://github.com/sainzs/badname/actions/workflows/ci.yml/badge.svg)](https://github.com/sainzs/badname/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@sainzs/badname)](https://www.npmjs.com/package/@sainzs/badname)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![corpus entries](https://img.shields.io/badge/corpus-150%20entries%20%7C%2019%20categories-green)](corpus/PLAIN.txt)
 
-Every tool that touches filenames — archivers, sync engines, package managers, build systems, backup tools, and every AI coding agent's patch applier — breaks on the same names: NFC/NFD Unicode twins, Windows-reserved device names, bidi overrides, control characters, trailing dots, byte-vs-UTF-16 length limits. These bugs are individually tiny and collectively enormous, and until now there was **no shared, maintained corpus** of them. `pathological` is that corpus, plus a zero-dependency CLI that puts it to work.
+Every tool that touches filenames — archivers, sync engines, package managers, build systems, backup tools, and every AI coding agent's patch applier — breaks on the same names: NFC/NFD Unicode twins, Windows-reserved device names, bidi overrides, control characters, trailing dots, byte-vs-UTF-16 length limits. These bugs are individually tiny and collectively enormous, and until now there was **no shared, maintained corpus** of them. `badname` is that corpus, plus a zero-dependency CLI that puts it to work.
 
-![pathological CLI scanning a repo for hazardous filenames](assets/hero.gif)
+![badname CLI scanning a repo for hazardous filenames](assets/hero.gif)
 
 > Born from real bugs: the [OpenCode NFD/NFC patch-matching fix](https://github.com/anomalyco/opencode/pull/32216) and the [Kilo Code Windows path normalization fix](https://github.com/Kilo-Org/kilocode/pull/7834). The corpus encodes this entire bug class as test vectors you can run in one line.
 
 ## What it does
 
 ```sh
-npx @sainzs/pathological check          # scan YOUR repo for hazardous names (read-only)
-npx @sainzs/pathological roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
+npx @sainzs/badname check          # scan YOUR repo for hazardous names (read-only)
+npx @sainzs/badname roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
                                         # does YOUR tool mangle fixture names?
 ```
 
-- **`pathological check [dir]`** — read-only scan of a tree. Reports names that are corpus hazards: singleton hazards (reserved device names, glob/metachar names, invisible-character names) always flag; twin pairs (NFC/NFD, case, ligature) flag only when both twins exist in the same directory — the actual collision — so a lone `Makefile` or `café.txt` stays clean. `--all` for maximum strictness. Exits 1 on any hit. Perfect as a CI gate.
-- **`pathological seed [dir]`** — materializes the fixture tree into an empty sandbox (default: a fresh temp dir). Entries not creatable on your OS are skipped and reported. On normalization- or case-insensitive volumes (APFS, NTFS), colliding twins are reported as *findings* — your filesystem agreeing with the corpus.
-- **`pathological roundtrip -- <cmd>`** — seeds a temp sandbox, runs your shell command inside it, then reports every fixture that was **renamed, normalized, case-folded, or lost**. Exits 1 on mangling. This is the one-command fuzz test for anything that writes filenames.
-- **`pathological list`** — print the corpus (invisible characters escaped as `\uXXXX`).
+- **`badname check [dir]`** — read-only scan of a tree. Reports names that are corpus hazards: singleton hazards (reserved device names, glob/metachar names, invisible-character names) always flag; twin pairs (NFC/NFD, case, ligature) flag only when both twins exist in the same directory — the actual collision — so a lone `Makefile` or `café.txt` stays clean. `--all` for maximum strictness. Exits 1 on any hit. Perfect as a CI gate.
+- **`badname seed [dir]`** — materializes the fixture tree into an empty sandbox (default: a fresh temp dir). Entries not creatable on your OS are skipped and reported. On normalization- or case-insensitive volumes (APFS, NTFS), colliding twins are reported as *findings* — your filesystem agreeing with the corpus.
+- **`badname roundtrip -- <cmd>`** — seeds a temp sandbox, runs your shell command inside it, then reports every fixture that was **renamed, normalized, case-folded, or lost**. Exits 1 on mangling. This is the one-command fuzz test for anything that writes filenames.
+- **`badname list`** — print the corpus (invisible characters escaped as `\uXXXX`).
 
 ## The corpus
 
@@ -54,21 +54,21 @@ npx @sainzs/pathological roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out
 
 Full data: [`corpus/corpus.json`](corpus/corpus.json) (machine) · [`corpus/PLAIN.txt`](corpus/PLAIN.txt) (human). Both are generated by [`scripts/build-corpus.js`](scripts/build-corpus.js) — the single source of truth; CI fails if the committed files drift.
 
-**Verified behavior encoded as data:** on APFS, seeding the NFC name `café.txt` and then the NFD twin fails with `EEXIST` — the filesystem is normalization-insensitive while your diff tool is not. The ligature `ﬁle.txt` (U+FB01) also collides with plain `file.txt` on APFS: a compatibility fold beyond NFC. `pathological seed` surfaces these as `collided` findings.
+**Verified behavior encoded as data:** on APFS, seeding the NFC name `café.txt` and then the NFD twin fails with `EEXIST` — the filesystem is normalization-insensitive while your diff tool is not. The ligature `ﬁle.txt` (U+FB01) also collides with plain `file.txt` on APFS: a compatibility fold beyond NFC. `badname seed` surfaces these as `collided` findings.
 
 ## Use in CI
 
 ```yaml
-# .github/workflows/pathological.yml
+# .github/workflows/badname.yml
 on: [pull_request]
 jobs:
-  pathological:
+  badname:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npx @sainzs/pathological check .
+      - run: npx @sainzs/badname check .
 ```
 
 Or vendor `corpus/PLAIN.txt` into your own test suite — it is data, MIT-licensed, no runtime required.

@@ -11,7 +11,7 @@
 This project is a test corpus and CLI. If you find a way for it to damage a
 system — a fixture that escapes the sandbox, a command-injection path in the
 harness, or content that crashes common terminals when printed — please
-report it privately using [GitHub security advisories](https://github.com/sainzs/pathological/security/advisories/new).
+report it privately using [GitHub security advisories](https://github.com/sainzs/badname/security/advisories/new).
 
 Please do not open a public issue for anything that could affect users'
 machines.
