@@ -37,13 +37,13 @@ The project formerly known as `pathological` is now **memex**.
 
 ## What changed
 
-- Product name, CLI binary (`memex check` / `seed` / `roundtrip` / `list`), npm package (`@sainzs/memex`), repo URL.
+- Product name, CLI binary (`memex check` / `seed` / `roundtrip` / `list`), npm package (`@ssainzs/memex`), repo URL.
 - Corpus, harness behavior, and all semantics **unchanged** — same 150 entries, 19 categories, 36/36 tests, 3-OS CI green.
 - Old URLs and git remotes redirect automatically.
 
 ```sh
-npx @sainzs/memex check          # scan a repo for hazardous names
-npx @sainzs/memex roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'
+npx @ssainzs/memex check          # scan a repo for hazardous names
+npx @ssainzs/memex roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'
 ```
 NOTES
 )"

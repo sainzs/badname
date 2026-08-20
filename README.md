@@ -9,6 +9,8 @@
 
 Every tool that touches filenames — archivers, sync engines, package managers, build systems, backup tools, and every AI coding agent's patch applier — breaks on the same names: NFC/NFD Unicode twins, Windows-reserved device names, bidi overrides, control characters, trailing dots, byte-vs-UTF-16 length limits. These bugs are individually tiny and collectively enormous, and until now there was **no shared, maintained corpus** of them. `memex` is that corpus, plus a zero-dependency CLI that puts it to work.
 
+![memex CLI scanning a repo for hazardous filenames](assets/hero.gif)
+
 > Born from real bugs: the [OpenCode NFD/NFC patch-matching fix](https://github.com/anomalyco/opencode/pull/32216) and the [Kilo Code Windows path normalization fix](https://github.com/Kilo-Org/kilocode/pull/7834). The corpus encodes this entire bug class as test vectors you can run in one line.
 
 ## What it does

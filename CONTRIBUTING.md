@@ -1,4 +1,4 @@
-# Contributing to pathological
+# Contributing to memex
 
 Thanks for helping harden the ecosystem's filename handling. The single rule:
 **the best fixtures are paths that actually hurt you.** Ideal contributions

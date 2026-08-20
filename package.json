@@ -1,5 +1,5 @@
 {
-  "name": "@sainzs/memex",
+  "name": "@ssainzs/memex",
   "version": "0.1.1",
   "description": "A maintained corpus of pathological file paths — Unicode normalization, reserved names, bidi, control chars — plus a harness to test any tool against them.",
   "license": "MIT",
@@ -37,7 +37,8 @@
     "scripts/build-corpus.js",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "assets/"
   ],
   "scripts": {
     "test": "node --test",

@@ -60,7 +60,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
 - [ ] **GitHub profile visibility public** (form requirement).
 - [ ] **Fill in** your ChatGPT email + OpenAI Organization ID above.
 - [ ] **Optional but strengthening:** publish to npm (`npm login` then
-      `npm publish` — ships as `@sainzs/memex`; unscoped name taken)
+      `npm publish` — ships as `@ssainzs/memex`; unscoped name taken)
       and swap this README badge line to the real npm badge; post once
       (Show HN "the Big List of Naughty Strings for file paths", r/node,
       OpenCode/Kilo communities) to seed organic stars before applying.
@@ -80,7 +80,7 @@ Form: <https://openai.com/form/codex-for-oss/> (rolling review; response by emai
   (EISDIR crash) — substantive, auto-closed by the repo's 2-hour
   contributing-guidelines bot on 2026-06-13, explicitly invited to reopen;
   revival is the top action in the core-maintainer track below.
-- Live demo of the thesis: `npx @sainzs/memex roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'`
+- Live demo of the thesis: `node bin/memex.js roundtrip -- 'tar cf o.tar . && mkdir r && tar xf o.tar -C r && rm o.tar'` (clone first — not yet published to npm)
 
 ## Local verification (passes today)
 
