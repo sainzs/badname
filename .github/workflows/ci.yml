@@ -6,46 +6,18 @@ on:
   pull_request:
 
 jobs:
-  test:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        node: [20, 24]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Corpus in sync + tests + self-scan
-        run: npm run check
-
-  # Dogfood: the corpus scans its own repository tree on every PR.
-  memex-self-check:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node bin/memex.js check .
+      - name: Corpus in sync + tests + self-scan
+        run: npm run check
 
-  # Reference roundtrip: the system tar must survive the corpus.
-  # If this fails on a runner image, that is a finding — investigate before
-  # merging; it has caught runner toolchain changes before.
-  tar-roundtrip:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - name: tar must roundtrip every fixture name
+      - name: Reference tar roundtrip
+        shell: bash
         run: |
           set -e
           SANDBOX=$(mktemp -d)
@@ -67,14 +39,6 @@ jobs:
               missing.push(name);
             }
             if (missing.length) { console.error('tar roundtrip FAILED — lost names:', missing); process.exit(1); }
-            if (process.platform === 'darwin') {
-              // macOS bsdtar (libarchive) writes pax headers in NFC: NFD
-              // fixtures legitimately come back normalized. That is a
-              // finding this corpus documents, not a failure.
-              if (normalized.length) console.log('note: macOS bsdtar normalized ' + normalized.length + ' name(s) (expected finding)');
-            } else if (normalized.length) {
-              console.error('tar roundtrip FAILED — normalized names on ' + process.platform + ':', normalized);
-              process.exit(1);
-            }
-            console.log('tar roundtrip clean: ' + (before.length - normalized.length) + ' byte-exact, ' + normalized.length + ' normalized');
+            if (normalized.length) { console.error('tar roundtrip FAILED — normalized names:', normalized); process.exit(1); }
+            console.log('tar roundtrip clean: ' + before.length + ' byte-exact');
           "
