@@ -3,7 +3,7 @@
 **The shared corpus of pathological file paths — and a harness to test any tool against them.**
 
 [![CI](https://github.com/sainzs/memex/actions/workflows/ci.yml/badge.svg)](https://github.com/sainzs/memex/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/@sainzs/memex)](https://www.npmjs.com/package/@sainzs/memex)
+[![npm (unpublished)](https://img.shields.io/badge/npm-unpublished-lightgrey)](CONTRIBUTING.md)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![corpus entries](https://img.shields.io/badge/corpus-150%20entries%20%7C%2019%20categories-green)](corpus/PLAIN.txt)
 
@@ -14,8 +14,8 @@ Every tool that touches filenames — archivers, sync engines, package managers,
 ## What it does
 
 ```sh
-npx @sainzs/memex check          # scan YOUR repo for hazardous names (read-only)
-npx @sainzs/memex roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
+node bin/memex.js check          # scan YOUR repo for hazardous names (read-only)
+node bin/memex.js roundtrip -- 'tar cf out.tar . && mkdir x && tar xf out.tar -C x && rm out.tar'
                                         # does YOUR tool mangle fixture names?
 ```
 
@@ -66,7 +66,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npx @sainzs/memex check .
+      - run: node bin/memex.js check .
 ```
 
 Or vendor `corpus/PLAIN.txt` into your own test suite — it is data, MIT-licensed, no runtime required.
